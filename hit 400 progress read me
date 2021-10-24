@@ -1,0 +1,27 @@
+cert tools
+source virtualenvironment/cert/bin/activate
+create-certificate-template -c conf.ini
+instantiate-certificate-batch -c conf.ini
+
+issuer
+go to home/alvina/Desktop/Project/digital-passport/cert-issuer/examples/data-testnet/unsigned_certificates#
+docker cp 4e7d75c5-281c-45de-93cc-3212b1349ee9.json f3e4bd177f7f:/etc/cert-issuer/data/unsigned_certificates/
+docker container start f3e4bd177f7f
+docker attach f3e4bd177f7f
+cert-issuer -c /etc/cert-issuer/conf.ini
+docker cp f3e4bd177f7f:/etc/cert-issuer/data/blockchain_certificates /home/alvina/Desktop/Project/digital-passport/cert-issuer/data/blockchain_certificates
+docker cp f3e4bd177f7f:/etc/cert-issuer/data/blockchain_certificates /home/alvina/Desktop/Project/digital-passport/cert-viewer/cert_data
+
+verifier
+ cd cert_verifier
+  python verifier.py
+  
+  viewer
+  source env/bin/activate
+  check for listening ports
+  sudo lsof -i :5000
+  sudo kill -9 <portID>
+  python run.py -c conf_local.ini
+  ctrl+c to stop port
+
+
